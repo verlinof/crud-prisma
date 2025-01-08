@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
+model Products {
   id Int @id @default(autoincrement())
   name String @unique
   price Float
@@ -21,6 +21,31 @@ model Product {
   availability Availability // Enumerate settings
   createdAt DateTime @default(now()) // Now digunakan untuk timestamp
   updatedAt DateTime @updatedAt
+  description Descriptions? //Has One
+  review Reviews[] //Has Many
+  tags Tags[]
+}
+
+model Descriptions {
+  id Int @default(autoincrement()) @id
+  content String
+  product Products @relation(fields: [productId], references: [id])
+  productId Int @unique //One to One
+}
+
+model Reviews {
+  id Int @default(autoincrement()) @id
+  title String
+  content String
+  rating Int
+  product Products @relation(fields: [productId], references: [id])
+  productId Int //One to many
+}
+
+model Tags {
+  id Int @default(autoincrement()) @id
+  content String
+  products Products[]
 }
 
 enum Availability {

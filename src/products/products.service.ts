@@ -6,28 +6,31 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createProductDto: Prisma.ProductCreateInput) {
-    return this.prisma.product.create({ data: createProductDto });
+  async create(createProductDto: Prisma.ProductsCreateInput) {
+    return this.prisma.products.create({ data: createProductDto });
   }
 
   async findAll() {
-    return this.prisma.product.findMany({
+    return this.prisma.products.findMany({
       // where: { sale: false }, //Contoh untuk filter
     });
   }
 
   async findOne(id: number) {
-    return this.prisma.product.findUnique({ where: { id } });
+    return this.prisma.products.findUnique({
+      where: { id },
+      include: { description: true, tags: true },
+    });
   }
 
-  async update(id: number, updateProductDto: Prisma.ProductUpdateInput) {
-    return this.prisma.product.update({
+  async update(id: number, updateProductDto: Prisma.ProductsUpdateInput) {
+    return this.prisma.products.update({
       where: { id },
       data: updateProductDto,
     });
   }
 
   async remove(id: number) {
-    return this.prisma.product.delete({ where: { id } });
+    return this.prisma.products.delete({ where: { id } });
   }
 }

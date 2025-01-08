@@ -15,7 +15,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Body() createProductDto: Prisma.ProductCreateInput) {
+  create(@Body() createProductDto: Prisma.ProductsCreateInput) {
     return this.productsService.create(createProductDto);
   }
 
@@ -32,7 +32,7 @@ export class ProductsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateProductDto: Prisma.ProductUpdateInput,
+    @Body() updateProductDto: Prisma.ProductsUpdateInput,
   ) {
     return this.productsService.update(+id, updateProductDto);
   }
